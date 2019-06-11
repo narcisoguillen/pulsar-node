@@ -52,7 +52,7 @@ const client = new Pulsar.Client({
 
 ### Options
 
-* `topic`
+* `topic` : required
 * `producerName`
 * `sendTimeoutMs`
 * `initialSequenceId`
@@ -90,8 +90,8 @@ client.createProducer({
 
 ### Options
 
-* `topic`
-* `subscription`
+* `topic` : required
+* `subscription` : required
 * `subscriptionType`
 * `ackTimeoutMs`
 * `receiverQueueSize`
@@ -114,7 +114,8 @@ const {Client} = require('pulsar-cli');
 const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
 
 client.subscribe({
-  topic: 'persistent://public/default/my-topic'
+  topic: 'persistent://public/default/my-topic',
+  subscription: 'sub1'
 }).then( consumer =>{
   //..
 });
@@ -157,7 +158,8 @@ const {Client} = require('pulsar-cli');
 const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
 
 client.subscribe({
-  topic: 'persistent://public/default/my-topic'
+  topic: 'persistent://public/default/my-topic',
+  subscription: 'sub1'
 }).then( consumer => {
   consumer.receive().then( message => {
     console.log(message.getData().toString()); // 'My-Message'
