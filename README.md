@@ -1,9 +1,11 @@
 pulsar-node
 ==========
 
+![Pulsar logo](docs/pulsar.png)
+
 [![NPM](https://nodei.co/npm/pulsar-node.png)](https://nodei.co/npm/pulsar-node/)
 
-> Node binding for pulsar
+> Node binding for Apache Pulsar
 
 This library is inspired by [pulsar-client-node](https://github.com/apache/pulsar-client-node)
 
