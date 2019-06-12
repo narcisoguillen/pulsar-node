@@ -13,13 +13,9 @@ This library is inspired by [pulsar-client-node](https://github.com/apache/pulsa
  npm install pulsar-cli
 ```
 
-# API
+# Options
 
-## Client
-
-### Options
-
-* `serviceUrl`
+* `serviceUrl` : required
 * `authentication`
 * `binding`
 * `operationTimeoutSeconds`
@@ -32,27 +28,27 @@ This library is inspired by [pulsar-client-node](https://github.com/apache/pulsa
 * `tlsAllowInsecureConnection`
 * `statsIntervalInSeconds`
 
-### Methods
+# API
 
-* `createProducer`
-* `subscribe`
-* `close`
-
+## init
 
 ```
-const Pulsar = require('pulsar-cli');
-
-const client = new Pulsar.Client({
-  serviceUrl: 'pulsar://localhost:6650'
+Pulsar.init({
+  serviceUrl : 'http://localhost:8080'
+}).then( pulsar =>{
+  // ready to use
+}, error =>{
+  // something wrong happen
 });
-
 ```
 
-## Producer
+## send(<message>)
 
-### Options
+### Message format
 
 * `topic` : required
+* `message` : required
+* `encoding` : String default 'binary', options ['binary', 'string']
 * `producerName`
 * `sendTimeoutMs`
 * `initialSequenceId`
@@ -67,30 +63,24 @@ const client = new Pulsar.Client({
 * `batchingMaxMessages`
 * `properties`
 
-### Methods
-
-* `send`
-* `flush`
-* `close`
-
-
 ```
-const {Client} = require('pulsar-cli');
-const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
-
-client.createProducer({
-  topic: 'persistent://public/default/my-topic'
-}).then( producer => {
-  //..
+pulsar.send({
+  topic   : 'persistent://public/default/my-topic',
+  message : 'hello world'
+}).then( seccess => {
+  // Message was sent
+}, error => {
+  // Something wrong happen
 });
-
 ```
 
-## Consumer
+## addConsumer(<TopicName>, <Options>)
+
+### TopicName
+* `TopicName` : required
 
 ### Options
 
-* `topic` : required
 * `subscription` : required
 * `subscriptionType`
 * `ackTimeoutMs`
@@ -99,71 +89,27 @@ client.createProducer({
 * `consumerName`
 * `properties`
 
-### Methods
-
-* `receive`
-* `acknowledge`
-* `acknowledgeId`
-* `acknowledgeCumulative`
-* `acknowledgeCumulativeId`
-* `close`
-
-
 ```
-const {Client} = require('pulsar-cli');
-const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
+let consumer = pulsar.addConsumer('persistent://public/default/my-topic', { subscription : 'sub1' });
 
-client.subscribe({
-  topic: 'persistent://public/default/my-topic',
-  subscription: 'sub1'
-}).then( consumer =>{
-  //..
+consumer.on('message', message => {
+  console.log('-->', message.value);
+  message.acknowledge();
 });
 
-```
-
-## Message
-
-### Methods
-
-* `getTopicName`
-* `getProperties`
-* `getData`
-* `getMessageId`
-* `getPublishTimestamp`
-* `getEventTimestamp`
-* `getPartitionKey`
-* `validateCMessage`
-
-
-# Send a message
-
-```
-const {Client} = require('pulsar-cli');
-const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
-
-client.createProducer({
-  topic: 'persistent://public/default/my-topic'
-}).then( producer => {
-  producer.send({
-    data: Buffer.from('My-Message')
-  });
+consumer.on('error', error =>{
+  // Something wrong happen
 });
 ```
 
-# Receive a message
+## close
+
+this mechanisms closes all consumers, producers, and client.
 
 ```
-const {Client} = require('pulsar-cli');
-const client   = new Client({ serviceUrl: 'pulsar://localhost:6650' });
-
-client.subscribe({
-  topic: 'persistent://public/default/my-topic',
-  subscription: 'sub1'
-}).then( consumer => {
-  consumer.receive().then( message => {
-    console.log(message.getData().toString()); // 'My-Message'
-    consumer.acknowledge(message);
-  });
+pulsar.close().then( closed =>{
+  // all is closed
+}, error =>{
+  // Something wrong happen
 });
 ```
