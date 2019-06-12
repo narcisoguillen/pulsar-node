@@ -1,11 +1,11 @@
 pulsar-node
 ==========
 
-![Pulsar logo](docs/pulsar.png)
-
 [![NPM](https://nodei.co/npm/pulsar-node.png)](https://nodei.co/npm/pulsar-node/)
 
 > Node binding for Apache Pulsar
+
+![Pulsar logo](docs/pulsar.png)
 
 This library is inspired by [pulsar-client-node](https://github.com/apache/pulsar-client-node)
 
@@ -110,7 +110,7 @@ pulsar.send({
 ## **addConsumer**(\<TopicName\>, \<Options\>)
 
 ### TopicName
-* `TopicName` : **required
+* `TopicName` : **required**
 
 ### Options
 
