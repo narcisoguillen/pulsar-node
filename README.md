@@ -67,7 +67,7 @@ Pulsar.init({
 
 ```
 Pulsar.init({
-  serviceUrl : 'http://localhost:8080'
+  serviceUrl : 'pulsar://localhost:6650'
 }).then( pulsar =>{
   // ready to use
 }, error =>{
@@ -126,14 +126,36 @@ pulsar.send({
 let consumer = pulsar.addConsumer('persistent://public/default/my-topic', { subscription : 'sub1' });
 
 consumer.on('message', message => {
-  console.log('-->', message.value);
-  message.acknowledge();
+
+  console.log('The message data', {
+    id           : message.getMessageId().toString(),
+    topicName    : message.getTopicName(),
+    properties   : message.getProperties(),
+    data         : message.getData().toString(),
+    partitionKey : message.getPartitionKey(),
+  });
+
+  consumer.acknowledge(message);
 });
 
 consumer.on('error', error =>{
   // Something wrong happen
 });
 ```
+
+## **Message Object**
+
+### Methods
+
+* `getTopicName`
+* `getProperties`
+* `getData`
+* `getMessageId`
+* `getPublishTimestamp`
+* `getEventTimestamp`
+* `getPartitionKey`
+* `validateCMessage`
+
 
 ## close
 
