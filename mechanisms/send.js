@@ -1,30 +1,19 @@
 const TopicManager = require('../managers/topic');
+const Producer     = require('../lib/producer');
 
 module.exports = function(data){
   return new Promise(function(resolve, reject){
     if(typeof data.topic !== 'string'){ return reject('Malformed topic name'); }
+    if(typeof data.message !== 'string'){ return reject('Malformed message'); }
 
-    let message  = data.message;
-    let encoding = data.encoding || 'binary';
+    let message = data.message;
+    let encode  = data.encoding || 'binary';
+    delete data.message;
+    delete data.encoding;
 
-    TopicManager.getProducer(data).then( producer =>{
-      let payload = null;
+    let topic      = TopicManager.get(data.topic);
+    topic.producer = topic.producer || new Producer(data);
 
-      switch(encoding){
-        case 'binary':
-          payload = Buffer.from(message);
-        break;
-        case 'string':
-          payload = typeof message === 'object' ? JSON.stringiy(message) : message;
-        break;
-        default:
-          payload = message;
-        break;
-      }
-
-      producer.send(payload).then( sent => {
-        producer.flush().then(resolve, reject);
-      }, reject);
-    }, reject);
+    topic.producer.send({message, encode}).then(resolve, reject);
   });
 };

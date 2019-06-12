@@ -81,7 +81,7 @@ Pulsar.init({
 
 * `topic` : **required**
 * `message` : **required**
-* `encoding` : String default 'binary', options ['binary', 'string']
+* `encoding` : default 'binary', options ['binary', 'string']
 * `producerName`
 * `sendTimeoutMs`
 * `initialSequenceId`
