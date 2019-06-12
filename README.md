@@ -15,8 +15,7 @@ This library is inspired by [pulsar-client-node](https://github.com/apache/pulsa
 
 # Options
 
-* `serviceUrl` : required
-* `authentication`
+* `serviceUrl` : **required**
 * `binding`
 * `operationTimeoutSeconds`
 * `ioThreads`
@@ -27,6 +26,38 @@ This library is inspired by [pulsar-client-node](https://github.com/apache/pulsa
 * `tlsValidateHostname`
 * `tlsAllowInsecureConnection`
 * `statsIntervalInSeconds`
+
+* `auth` : *optional*
+* * `tls` : {Object}
+* * `athenz` : {Object}
+* * `token` : string
+
+
+## authentication
+
+### tls
+```
+Pulsar.init({
+  serviceUrl: 'pulsar+ssl://localhost:6651',
+  tlsTrustCertsFilePath: '/path/to/server.crt',
+  auth : {
+    tls : {
+      certificatePath: '/path/to/client.crt',
+      privateKeyPath: '/path/to/client.key'
+    }
+  }
+});
+```
+
+### token
+```
+Pulsar.init({
+  serviceUrl: 'pulsar://localhost:6650',
+  auth : {
+    token : 'a.b.c'
+  }
+});
+```
 
 # API
 
@@ -42,12 +73,12 @@ Pulsar.init({
 });
 ```
 
-## send(<message>)
+## **send**(\<message\>)
 
 ### Message format
 
-* `topic` : required
-* `message` : required
+* `topic` : **required**
+* `message` : **required**
 * `encoding` : String default 'binary', options ['binary', 'string']
 * `producerName`
 * `sendTimeoutMs`
@@ -74,14 +105,14 @@ pulsar.send({
 });
 ```
 
-## addConsumer(<TopicName>, <Options>)
+## **addConsumer**(\<TopicName\>, \<Options\>)
 
 ### TopicName
-* `TopicName` : required
+* `TopicName` : **required
 
 ### Options
 
-* `subscription` : required
+* `subscription` : **required**
 * `subscriptionType`
 * `ackTimeoutMs`
 * `receiverQueueSize`
