@@ -1,7 +1,7 @@
-pulsar-cli
+pulsar-node
 ==========
 
-[![NPM](https://nodei.co/npm/pulsar-cli.png)](https://nodei.co/npm/pulsar-cli/)
+[![NPM](https://nodei.co/npm/pulsar-node.png)](https://nodei.co/npm/pulsar-node/)
 
 > Node binding for pulsar
 
@@ -10,7 +10,7 @@ This library is inspired by [pulsar-client-node](https://github.com/apache/pulsa
 # Install
 
 ```
- npm install pulsar-cli
+ npm install pulsar-node
 ```
 
 # Options
