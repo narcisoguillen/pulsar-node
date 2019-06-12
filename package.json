@@ -1,6 +1,6 @@
 {
-  "name": "pulsar-cli",
-  "version": "0.1.1",
+  "name": "pulsar-node",
+  "version": "0.0.1",
   "description": "Node binding for pulsar",
   "main": "index.js",
   "dependencies": {
