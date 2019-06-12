@@ -1,6 +1,6 @@
 {
   "name": "pulsar-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Node binding for pulsar",
   "main": "index.js",
   "dependencies": {
@@ -18,10 +18,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/narcisoguillen/pulsar-cli.git"
+    "url": "git+https://github.com/narcisoguillen/pulsar-node.git"
   },
   "bugs": {
-    "url": "https://github.com/narcisoguillen/pulsar-cli/issues"
+    "url": "https://github.com/narcisoguillen/pulsar-node/issues"
   },
-  "homepage": "https://github.com/narcisoguillen/pulsar-cli#readme"
+  "homepage": "https://github.com/narcisoguillen/pulsar-node#readme"
 }
