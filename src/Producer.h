@@ -17,14 +17,28 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#ifndef PRODUCER_H
+#define PRODUCER_H
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
-}
+#include <napi.h>
+#include <pulsar/c/client.h>
+#include <pulsar/c/producer.h>
 
-module.exports = AuthenticationAthenz;
+class Producer : public Napi::ObjectWrap<Producer> {
+public:
+  static void Init(Napi::Env env, Napi::Object exports);
+  static Napi::Value NewInstance(const Napi::CallbackInfo &info,
+                                 pulsar_client_t *cClient);
+  static Napi::FunctionReference constructor;
+  Producer(const Napi::CallbackInfo &info);
+  ~Producer();
+  void SetCProducer(pulsar_producer_t *cProducer);
+
+private:
+  pulsar_producer_t *cProducer;
+  Napi::Value Send(const Napi::CallbackInfo &info);
+  Napi::Value Flush(const Napi::CallbackInfo &info);
+  Napi::Value Close(const Napi::CallbackInfo &info);
+};
+
+#endif

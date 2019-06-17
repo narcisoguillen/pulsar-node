@@ -17,14 +17,23 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#include "Authentication.h"
+#include "Client.h"
+#include "Consumer.h"
+#include "Message.h"
+#include "MessageId.h"
+#include "Producer.h"
+#include "Reader.h"
+#include <napi.h>
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
+Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
+  Message::Init(env, exports);
+  MessageId::Init(env, exports);
+  Authentication::Init(env, exports);
+  Producer::Init(env, exports);
+  Consumer::Init(env, exports);
+  Reader::Init(env, exports);
+  return Client::Init(env, exports);
 }
 
-module.exports = AuthenticationAthenz;
+NODE_API_MODULE(NODE_GYP_MODULE_NAME, InitAll)

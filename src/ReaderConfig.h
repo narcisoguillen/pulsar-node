@@ -17,14 +17,26 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#ifndef READER_CONFIG_H
+#define READER_CONFIG_H
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
-}
+#include <napi.h>
+#include <pulsar/c/message_id.h>
+#include <pulsar/c/reader.h>
+#include <pulsar/c/reader_configuration.h>
 
-module.exports = AuthenticationAthenz;
+class ReaderConfig {
+public:
+  ReaderConfig(const Napi::Object &readerConfig);
+  ~ReaderConfig();
+  pulsar_reader_configuration_t *GetCReaderConfig();
+  pulsar_message_id_t *GetCStartMessageId();
+  std::string GetTopic();
+
+private:
+  pulsar_reader_configuration_t *cReaderConfig;
+  pulsar_message_id_t *cStartMessageId;
+  std::string topic;
+};
+
+#endif

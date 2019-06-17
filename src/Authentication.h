@@ -17,14 +17,22 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#ifndef AUTH_H
+#define AUTH_H
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
-}
+#include <napi.h>
+#include <pulsar/c/authentication.h>
 
-module.exports = AuthenticationAthenz;
+class Authentication : public Napi::ObjectWrap<Authentication> {
+public:
+  static Napi::Object Init(Napi::Env env, Napi::Object exports);
+  Authentication(const Napi::CallbackInfo &info);
+  ~Authentication();
+  pulsar_authentication_t *GetCAuthentication();
+
+private:
+  static Napi::FunctionReference constructor;
+  pulsar_authentication_t *cAuthentication;
+};
+
+#endif

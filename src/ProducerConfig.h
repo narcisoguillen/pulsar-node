@@ -17,14 +17,22 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#ifndef PRODUCER_CONFIG_H
+#define PRODUCER_CONFIG_H
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
-}
+#include <napi.h>
+#include <pulsar/c/producer_configuration.h>
 
-module.exports = AuthenticationAthenz;
+class ProducerConfig {
+public:
+  ProducerConfig(const Napi::Object &producerConfig);
+  ~ProducerConfig();
+  pulsar_producer_configuration_t *GetCProducerConfig();
+  std::string GetTopic();
+
+private:
+  pulsar_producer_configuration_t *cProducerConfig;
+  std::string topic;
+};
+
+#endif

@@ -17,14 +17,28 @@
  * under the License.
  */
 
-const PulsarBinding = require('bindings')('Pulsar');
+#ifndef CONSUMER_CONFIG_H
+#define CONSUMER_CONFIG_H
 
-class AuthenticationAthenz {
-  constructor(params) {
-    const paramsStr =
-        (typeof params === 'object') ? JSON.stringify(params) : params;
-    this.binding = new PulsarBinding.Authentication('athenz', paramsStr);
-  }
-}
+#include <napi.h>
+#include <pulsar/c/consumer_configuration.h>
 
-module.exports = AuthenticationAthenz;
+#define MIN_ACK_TIMEOUT_MILLIS 10000
+
+class ConsumerConfig {
+public:
+  ConsumerConfig(const Napi::Object &consumerConfig);
+  ~ConsumerConfig();
+  pulsar_consumer_configuration_t *GetCConsumerConfig();
+  std::string GetTopic();
+  std::string GetSubscription();
+  int64_t GetAckTimeoutMs();
+
+private:
+  pulsar_consumer_configuration_t *cConsumerConfig;
+  std::string topic;
+  std::string subscription;
+  int64_t ackTimeoutMs;
+};
+
+#endif
