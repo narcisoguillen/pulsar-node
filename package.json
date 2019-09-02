@@ -1,19 +1,13 @@
 {
   "name": "pulsar-node",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Node binding for pulsar",
   "main": "index.js",
   "dependencies": {
-    "bindings": "^1.5.0",
-    "node-addon-api": "^1.6.3",
-    "node-gyp": "^5.0.0"
+    "pulsar-client": "^1.0.0-rc.1"
   },
   "devDependencies": {},
   "gypfile": true,
-  "scripts": {
-    "configure": "node-gyp configure",
-    "install": "node-gyp rebuild"
-  },
   "author": "narciso guillen",
   "keywords": [
     "pulsar",
