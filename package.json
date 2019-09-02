@@ -1,13 +1,12 @@
 {
   "name": "pulsar-node",
-  "version": "1.0.1",
-  "description": "Node binding for pulsar",
+  "version": "1.0.2",
+  "description": "Node event based pulsar",
   "main": "index.js",
   "peerDependencies": {
     "pulsar-client": "^1.0.0-rc.1"
   },
   "devDependencies": {},
-  "gypfile": true,
   "author": "narciso guillen",
   "keywords": [
     "pulsar",
