@@ -9,6 +9,14 @@ pulsar-node
 
 This library is inspired by [pulsar-client-node](https://github.com/apache/pulsar-client-node)
 
+# Requirements
+
+`pulsar-client` is a peer dependency, make sure to install it. Tested on pulsar-client 1.0.0-rc.1
+
+```
+ npm install pulsar-client
+```
+
 # Install
 
 ```
