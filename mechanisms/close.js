@@ -1,14 +1,10 @@
-const TopicManager = require('../managers/topic');
-const Client       = require('../lib/client');
+const Producers  = require('../managers/producers');
+const Consumers  = require('../managers/consumers');
+const PulsarNode = require('../');
 
 module.exports = async function(data){
-  for(let topicName in TopicManager.Map){
-    let topic = TopicManager.get(topicName);
-    if(topic.consumer){ await topic.consumer.close(); }
-    if(topic.producer){ await topic.producer.close(); }
+  await Producers.closeAll();
+  await Consumers.closeAll();
 
-    delete TopicManager.Map[topicName];
-  }
-
-  return await Client.close();
+  return await PulsarNode.client.close();
 };

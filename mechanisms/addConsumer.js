@@ -1,10 +1,5 @@
-const Consumer     = require('../lib/consumer');
-const TopicManager = require('../managers/topic');
+const Consumers = require('../managers/consumers');
 
 module.exports = function(topicName, options){
-  (options) || (options = {});
-  let topic      = TopicManager.get(topicName);
-  topic.consumer = topic.consumer || new Consumer(topicName, options);
-
-  return topic.consumer;
+  return Consumers.find(topicName, options);
 };

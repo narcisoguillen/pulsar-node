@@ -1,19 +1,7 @@
-const TopicManager = require('../managers/topic');
-const Producer     = require('../lib/producer');
+const Producers = require('../managers/producers');
 
 module.exports = function(data){
-  return new Promise(function(resolve, reject){
-    if(typeof data.topic !== 'string'){ return reject('Malformed topic name'); }
-    if(typeof data.message !== 'string'){ return reject('Malformed message'); }
+  let producer = Producers.find(data);
 
-    let message = data.message;
-    let encode  = data.encoding || 'binary';
-    delete data.message;
-    delete data.encoding;
-
-    let topic      = TopicManager.get(data.topic);
-    topic.producer = topic.producer || new Producer(data);
-
-    topic.producer.send({message, encode}).then(resolve, reject);
-  });
+  return producer.send(data);
 };

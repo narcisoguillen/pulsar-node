@@ -1,7 +1,12 @@
-module.exports.init = async function(settings){
-  const core = require('./lib');
+const PulsarNode = {};
 
-  core.Settings.read(settings);
-  let client   = await core.Client.connect();
-  return core.Mechanisms;
+PulsarNode.init = async function(settings){
+  PulsarNode.core = require('./lib');
+  PulsarNode.core.Settings.read(settings);
+
+  PulsarNode.client = PulsarNode.core.Client.connect();
+
+  return PulsarNode.core.Mechanisms;
 };
+
+module.exports = PulsarNode;
